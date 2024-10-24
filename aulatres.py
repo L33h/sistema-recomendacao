@@ -11,22 +11,31 @@ Original file is located at
 
 import numpy as np
 from sklearn.cluster import KMeans
+import pandas as pd
+
+# 1 passo: especificar o caminho do arquivo CSV
+caminho_arquivo = '/content/filmes_100_usuarios.csv'
+
+# 2 passo: Ler o CSV usando pandas
+df = pd.read_csv(caminho_arquivo)
+
+# Exibir o cabeçalho do arquivo para verificar se foi lido corretamente
+print(df.head())
 
 # Matriz com os filmes assistidos
+# Convertendo o DataFrame para uma matriz numpy
+filmes_assistidos = df.drop(columns=["Unnamed: 0"]).values
+
+# Definindo o numero de clusters(Grupos)
+num_cluster = 2
 
 filmes_assistidos = np.array([
-    [1,0,0,1,0,0],
-    [1,1,0,0,1,1],
-    [0,1,1,0,1,0],
-    [0,0,1,1,1,0],
-    [1,0,1,0,0,1],
-    [0,1,0,1,0,1],
-    [1,0,0,1,0,0],
-    [1,1,0,0,1,1],
-    [0,1,1,0,1,0],
-    [0,0,1,1,1,0],
-    [1,0,1,0,0,1],
-    [1,1,1,1,0,1]
+    [1,0,0,1],
+    [1,1,0,0],
+    [0,1,1,0],
+    [0,0,1,1],
+    [1,0,1,0],
+    [0,1,0,1]
 
 ])
 
@@ -87,7 +96,7 @@ def recomender_filmes(filmes, filmes_assistidos, grupos_indice):
   return sorted(filmes_recomendados)
 
   # Exemplo de uso de função recomendar filmes
-  filmes_asssistidos_usuario =[1, 0, 1, 0]
+  filmes_asssistidos_usuario = [1, 1, 0, 1, 0, 1, 1, 0, 1, 0]
 
   # Vetor de filmes assistidos (tipo, assistiu aos filmes 1 e 3)
   filmes_recomendados = recomendar_filmes(filmes_assistidos_usuario, filmes_assistidos, grupo_indice)
